@@ -289,7 +289,9 @@ class Socket {
         /* Engine.IO, we cannot emit 'close' from within this function call */
         const nativeSocket = this.nativeSocket, nativeServer = this.nativeServer;
         process.nextTick(() => {
-            nativeServer.close(nativeSocket, code, data);
+            if(nativeServer) {
+                nativeServer.close(nativeSocket, code, data);
+            }
         });
 
         this.nativeServer = this.nativeSocket = null;
